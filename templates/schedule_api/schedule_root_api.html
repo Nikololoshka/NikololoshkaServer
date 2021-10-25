@@ -1,0 +1,10 @@
+<p>
+    Stankin Schedule API:
+</p>
+<ul>
+    <li><a href="{% url 'schedule-api-info'%}?categories=true">Schedule Info - информация о репозитории</a></li>
+    <li><a href="{% url 'schedule-api-list'%}">Schedule List - список расписаний</a></li>
+    <li><a href="{% url 'schedule-api-category'%}?parent=0">Schedule Category - список категорий</a></li>
+    <li><a href="{% url 'schedule-api-update' pk='0' %}">Schedule Update - обновления расписания</a></li>
+    <li><a href="{% url 'schedule-api-item' pk='0' %}">Schedule Item - занятия конкретного расписания</a></li>
+</ul>

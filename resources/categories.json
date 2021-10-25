@@ -1,0 +1,83 @@
+[
+    {
+        "name": "Аспирантура",
+        "children": []
+    },
+    {
+        "name": "Бакалавриат",
+        "children": [
+            {
+                "name": "1 курс",
+                "children": []
+            },
+            {
+                "name": "2 курс",
+                "children": []
+            },
+            {
+                "name": "3 курс",
+                "children": []
+            },
+            {
+                "name": "4 курс",
+                "children": []
+            }
+        ]
+    },
+    {
+        "name": "Магистратура",
+        "children": [
+            {
+                "name": "Очная форма обучения",
+                "children": [
+                    {
+                        "name": "1 курс",
+                        "children": []
+                    },
+                    {
+                        "name": "2 курс",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Очно-заочная форма обучения",
+                "children": [
+                    {
+                        "name": "1 курс",
+                        "children": []
+                    },
+                    {
+                        "name": "2 курс",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Специалитет",
+        "children": [
+            {
+                "name": "1 курс",
+                "children": []
+            },
+            {
+                "name": "2 курс",
+                "children": []
+            },
+            {
+                "name": "3 курс",
+                "children": []
+            },
+            {
+                "name": "4 курс",
+                "children": []
+            },
+            {
+                "name": "5 курс",
+                "children": []
+            }
+        ]
+    }
+]

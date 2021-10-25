@@ -1,0 +1,10 @@
+{% extends "rest_framework/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ name }} - Nikololoshka Server API{% endblock %}
+
+{% block branding %}
+    <a class="navbar-brand" rel="nofollow" href="#">
+        {% trans 'Nikololoshka Server API' %}
+    </a>
+{% endblock %}
