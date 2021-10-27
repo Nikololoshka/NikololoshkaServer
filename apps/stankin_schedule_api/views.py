@@ -1,10 +1,8 @@
-from django.db.models import Exists, F
 from django.template.loader import render_to_string
 from rest_framework import views
 from rest_framework.response import Response
 
 from .models import ScheduleCategory, ScheduleVersion, SchedulePair, ScheduleItem, ScheduleUpdate
-from .utils import get_or_none, populate_schedules, pre_populate_categories, populate_folders
 from .serializers import ScheduleCategorySerializer, ScheduleItemSerializer, ScheduleUpdateSerializer
 
 
@@ -64,9 +62,7 @@ class ScheduleUpdateView(views.APIView):
         updates = ScheduleUpdate.objects.filter(update_versions__item__exact=pk)[:5]
         serializer = ScheduleUpdateSerializer(updates, many=True)
 
-        return Response({
-            'data': serializer.data
-        })
+        return Response(serializer.data)
 
 
 class ScheduleInfoView(views.APIView):
@@ -75,16 +71,16 @@ class ScheduleInfoView(views.APIView):
     """
     def get(self, request):
         response = {
-            'data': {
+            'description': {
                 'version': '2021-10-25'
             }
         }
 
-        add_categories = request.query_params.get('categories', True)
+        add_categories = request.query_params.get('categories', False)
         if add_categories:
             categories = ScheduleCategory.objects.all()
             serializer = ScheduleCategorySerializer(categories, many=True)
-            response['data']['categories'] = serializer.data
+            response['categories'] = serializer.data
 
         return Response(response)
 
