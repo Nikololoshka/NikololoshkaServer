@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', lambda request: redirect('schedule-api-root')),
     path('admin/', admin.site.urls),
     path('stankinschedule/api/', include('apps.stankin_schedule_api.urls'))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
