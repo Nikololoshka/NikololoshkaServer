@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.1.49',
-    'http://nikololoshka.pythonanywhere.com/'
+    'nikololoshka.pythonanywhere.com/'
 ]
 
 # Application definition
