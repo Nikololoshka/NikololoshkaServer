@@ -2,6 +2,7 @@ import json
 import zipfile
 from itertools import groupby
 
+from django.db.models import Value, IntegerField
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.views import View
@@ -64,10 +65,10 @@ class ScheduleUpdateView(views.APIView):
     Версии расписания.
     """
     def get(self, request, pk=None):
-        updates = ScheduleUpdate.objects.filter(update_versions__item__exact=pk)[:5]
-        serializer = ScheduleUpdateSerializer(updates, many=True)
-
-        return Response(serializer.data)
+        updates = ScheduleUpdate.objects.filter(update_versions__item__exact=pk) \
+                                        .annotate(item=Value(pk, output_field=IntegerField())) \
+                                        .values('id', 'name', 'item')[:5]
+        return Response(updates)
 
 
 class ScheduleInfoView(views.APIView):
