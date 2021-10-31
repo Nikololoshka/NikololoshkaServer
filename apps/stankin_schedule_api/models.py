@@ -69,11 +69,14 @@ class SchedulePair(models.Model):
             "subgroup": self.subgroup,
             "type": self.type,
             "time": {
-                "start": self.time_start,
-                "end": self.time_end
+                "start": self.time_start.strftime('%H:%M'),
+                "end": self.time_end.strftime('%H:%M')
             },
             "dates": self.dates
         }
+
+    def __str__(self):
+        return f'SchedulePair(title={self.title})'
 
     class Meta:
         managed = True

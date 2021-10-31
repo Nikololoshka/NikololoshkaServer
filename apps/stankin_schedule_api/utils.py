@@ -98,6 +98,8 @@ def populate_schedules(folder_path, categories, date):
 
 
 def update_categories(folder):
+    ScheduleItem.objects.all().update(category=None)
+
     folder_path = Path(folder).absolute().resolve()
     categories = list(ScheduleCategory.objects.all())
 
