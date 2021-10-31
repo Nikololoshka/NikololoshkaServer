@@ -1,9 +1,16 @@
+import json
+import zipfile
+from itertools import groupby
+
+from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.views import View
 from rest_framework import views
 from rest_framework.response import Response
 
 from .models import ScheduleCategory, ScheduleVersion, SchedulePair, ScheduleItem, ScheduleUpdate
 from .serializers import ScheduleCategorySerializer, ScheduleItemSerializer, ScheduleUpdateSerializer
+from .utils import update_categories
 
 
 class ScheduleItemView(views.APIView):
@@ -37,9 +44,7 @@ class ScheduleListView(views.APIView):
             schedules = ScheduleItem.objects.filter(category__exact=category)
 
         serializer = ScheduleItemSerializer(schedules, many=True)
-        return Response({
-            'schedules': serializer.data
-        })
+        return Response(serializer.data)
 
 
 class ScheduleCategoriesView(views.APIView):
@@ -85,6 +90,29 @@ class ScheduleInfoView(views.APIView):
         return Response(response)
 
 
+class TestView(View):
+    def get(self, request):
+
+        update_id = 21
+        update = ScheduleUpdate.objects.get(id=update_id)
+
+        response = HttpResponse(content_type='application/x-zip-compressed')
+        zf = zipfile.ZipFile(response, 'w')
+
+        dataset = SchedulePair.objects.filter(version__update__exact=update) \
+            .select_related('version', 'version__item')
+
+        print(dataset.query)
+
+        for data in groupby(dataset, lambda x: x.version.item):
+            item, pairs = data
+            zf.writestr(f'{item.name}.json', json.dumps([pair.to_json() for pair in pairs], ensure_ascii=False))
+
+        response['Content-Disposition'] = f'attachment; filename="Schedules {update.date}.zip"'
+
+        return response
+
+
 class ApiRootView(views.APIView):
     """
     REST API для расписаний МГТУ "СТАНИКИН" для
@@ -95,6 +123,8 @@ class ApiRootView(views.APIView):
         # pre_populate_categories()
         # populate_schedules('../StankinSchedules/2021-05-04', 'Расписания от 4 мая 2021')
         # populate_folders('../StankinSchedules')
+
+        # update_categories('../StankinSchedules/2021-02-15')
 
         # ScheduleVersion.objects.all().delete()
         # SchedulePair.objects.all().delete()
